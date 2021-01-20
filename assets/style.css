@@ -7,12 +7,13 @@ header {
 .container {
     display: flex;
     flex-direction: row;
+    margin-left: 0;
 }
 
-.search {
+.searchContainer {
     padding: 30px;
 }
 
-.retrievedStats {
+.forecastContainer {
     margin-top: 30px;
 }
