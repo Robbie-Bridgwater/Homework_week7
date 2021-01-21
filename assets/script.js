@@ -1,14 +1,16 @@
 let APIKey = '157838fc226a31fe1ea09f1f52674ede';
-let searchedCity = 'Birmingham';
+// let searchedCity = 'Birmingham';
 let lat = 33.5207;
 let lon = -86.8025;
+let searchButton = $('.searchButton');
+let searchInput = $(".searchInput");
 
 function dynamicText(text, response, string) {
     $("." + text + " ").text(" " + string + " " + response);
 }
 
 // Searched city will go as argument below instead of global variable which is being used to test this piece of code.
-function getWeatherData() {
+function getWeatherData(searchedCity) {
     let queryURL = 'https://api.openweathermap.org/data/2.5/weather?q=' + searchedCity + '&appid=' + APIKey + "&units=metric";
     var queryURL2 = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&exclude=hourly,daily" + "&appid=" + APIKey;
     $.ajax({
@@ -40,4 +42,11 @@ function getWeatherData() {
     });
 };
 
-getWeatherData();
+searchButton.on("click", function(e) {
+    e.preventDefault();
+    if (searchInput.val() === "") {
+        alert("You must enter a city");
+        return;
+    }
+    getWeatherData(searchInput.val());
+});
