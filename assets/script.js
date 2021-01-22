@@ -43,22 +43,11 @@ function getWeatherData(searchedCity) {
             for (var i = 0; i < fiveDayForecast.list.length; i++) {
                 if (fiveDayForecast.list[i].dt_txt.indexOf("15:00:00") !== -1) {
                     console.log([i]);
-                    // The parts below can be shortened massively. Look at week 6 homework and how you made the content dynamically there.
-                    let forecastCard = $("<div>", {
-                        class: "card",
-                    });
-                    let forecastDate = $("<h2>", {
-                        class: "card-body",
-                    })
-                    let forecastIcon = $("<img>", {
-                        class: "card-body",
-                    })
-                    let forecastTemp = $("<p>", {
-                        class: "card-body",
-                    })
-                    let forecastHumidity = $("<p>", {
-                        class: "card-body",
-                    })
+                    let forecastCard = $("<div>", { class: "card" })
+                    let forecastDate = $("<h2>", { class: "card-body" })
+                    let forecastIcon = $("<img>", { class: "card-body" })
+                    let forecastTemp = $("<p>", { class: "card-body" })
+                    let forecastHumidity = $("<p>", { class: "card-body" })
                     let forecastUNIX = fiveDayForecast.list[i].dt;
                     forecastDate.append(UNIXconverter(forecastUNIX));
                     forecastCard.append(forecastDate);
