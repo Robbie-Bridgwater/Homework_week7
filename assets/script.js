@@ -7,9 +7,8 @@ let searchHistoryDiv = $(".searchHistory");
 let forecastRow = $("<div>").addClass("row");
 let searchHistory = JSON.parse(localStorage.getItem("search")) || [];
 renderSearchHistory();
-
-function dynamicText(text, response, string) {
-    $("." + text + " ").text(" " + string + " " + response);
+if (searchHistory.length > 0) {
+    getWeatherData(searchHistory[searchHistory.length - 1]);
 }
 
 function getWeatherData(searchedCity) {
@@ -30,7 +29,14 @@ function getWeatherData(searchedCity) {
         }).
         then(function(a2) {
             let cityUVIndex = a2.current.uvi;
-            dynamicText("UVDiv", cityUVIndex, "UV Index (UVI)")
+            $("#uvBadge").text("UV index: " + cityUVIndex);
+            if (cityUVIndex < 3) {
+                $("#uvBadge").attr("class", "badge bg-success");
+            } else if (cityUVIndex > 3 && cityUVIndex < 7) {
+                $("#uvBadge").attr("class", "badge bg-warning text-dark");
+            } else {
+                $("#uvBadge").attr("class", "badge bg-danger");
+            }
         });
     });
 
@@ -45,7 +51,7 @@ function getWeatherData(searchedCity) {
             console.log("fiveday: ", fiveDayForecast);
             for (var i = 0; i < fiveDayForecast.list.length; i++) {
                 if (fiveDayForecast.list[i].dt_txt.indexOf("15:00:00") !== -1) {
-                    let forecastCard = $("<div>").addClass("card col-md-2");
+                    let forecastCard = $("<div>").addClass("card col");
                     let forecastDate = $("<h2>").addClass("card-body");
                     let forecastIcon = $("<img>").addClass("card-body");
                     let forecastTemp = $("<p>").addClass("card-body");
@@ -58,7 +64,7 @@ function getWeatherData(searchedCity) {
                     forecastIcon.attr("src", "https://openweathermap.org/img/w/" + fiveDayForecast.list[i].weather[0].icon + ".png");
                     forecastCard.append(forecastIcon);
 
-                    forecastTemp.text("Temperature (°C) " + fiveDayForecast.list[i].main.temp);
+                    forecastTemp.text("Temp (°C) " + fiveDayForecast.list[i].main.temp);
                     forecastCard.append(forecastTemp);
 
                     forecastHumidity.text("Humidity (RH%) " + fiveDayForecast.list[i].main.humidity);
@@ -92,12 +98,17 @@ clearButton.on("click", function(event) {
     renderSearchHistory()
 });
 
+$(document).on("click", ".searchHistoryItem", function() {
+    let thisElement = $(this);
+    getWeatherData(thisElement.text());
+})
+
 // The timestamps provided with the fiveday forecast are UNIX timestamps - this converts them to a readable format.
 function UNIXconverter(timeStamp) {
     dateConvert = new Date(timeStamp * 1000);
     dateString = dateConvert.toLocaleDateString();
     dateDay = dateConvert.getUTCDay();
-    weekArray = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+    weekArray = ["Mon", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun"];
     weekDayAndDateConverted = weekArray[dateDay] + " " + dateString;
     return weekDayAndDateConverted;
 }
@@ -105,17 +116,12 @@ function UNIXconverter(timeStamp) {
 function renderSearchHistory() {
     searchHistoryDiv.empty()
     for (let i = 0; i < searchHistory.length; i++) {
-        const searchHistoryItem = $('<p>').addClass("searchHistoryItem");
+        const searchHistoryItem = $('<p>').addClass("searchHistoryItem p-3 mb-2 bg-light text-dark border border-primary");
         searchHistoryItem.text(searchHistory[i]);
         searchHistoryDiv.prepend(searchHistoryItem);
     }
 }
 
-$(document).on("click", ".searchHistoryItem", function() {
-    let thisElement = $(this);
-    getWeatherData(thisElement.text());
-})
-
-if (searchHistory.length > 0) {
-    getWeatherData(searchHistory[searchHistory.length - 1]);
+function dynamicText(text, response, string) {
+    $("." + text + " ").text(" " + string + " " + response);
 }
