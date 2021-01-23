@@ -17,3 +17,10 @@ header {
 .forecastContainer {
     margin-top: 30px;
 }
+
+.card {
+    border-radius: 5px;
+    color: white;
+    font-size: larger;
+    background-color: #3498db;
+}

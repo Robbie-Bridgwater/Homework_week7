@@ -1,7 +1,12 @@
 let APIKey = '157838fc226a31fe1ea09f1f52674ede';
 let searchButton = $('.searchButton');
+let clearButton = $('.clearButton');
 let searchInput = $(".searchInput");
 let forecastCardHTML = $(".forecastCard");
+let searchHistoryDiv = $(".searchHistory");
+let forecastRow = $("<div>").addClass("row");
+let searchHistory = JSON.parse(localStorage.getItem("search")) || [];
+renderSearchHistory();
 
 function dynamicText(text, response, string) {
     $("." + text + " ").text(" " + string + " " + response);
@@ -13,26 +18,24 @@ function getWeatherData(searchedCity) {
         url: queryURL,
         method: 'GET'
     }).
-    then(function(API_data) {
-        console.log(API_data);
-        dynamicText("windSpeedDiv", API_data.wind.speed, "Wind Speed (FPM)");
-        dynamicText("humidityDiv", API_data.main.humidity, "Humidity (RH%)");
-        dynamicText("temperatureDiv", API_data.main.temp, "Temperature (°C)")
-        console.log(cityObj);
-        let queryURL2 = "https://api.openweathermap.org/data/2.5/onecall?lat=" + API_data.coord.lat + "&lon=" + API_data.coord.lon + "&exclude=hourly,daily" + "&appid=" + APIKey;
+    then(function(a) {
+        console.log(a);
+        dynamicText("windSpeedDiv", a.wind.speed, "Wind Speed (FPM)");
+        dynamicText("humidityDiv", a.main.humidity, "Humidity (RH%)");
+        dynamicText("temperatureDiv", a.main.temp, "Temperature (°C)");
+        let queryURL2 = "https://api.openweathermap.org/data/2.5/onecall?lat=" + a.coord.lat + "&lon=" + a.coord.lon + "&exclude=hourly,daily" + "&appid=" + APIKey;
         $.ajax({
             url: queryURL2,
             method: 'GET'
         }).
-        then(function(API_data2) {
-            console.log(API_data2);
-            let cityUVIndex = API_data2.current.uvi;
+        then(function(a2) {
+            let cityUVIndex = a2.current.uvi;
             dynamicText("UVDiv", cityUVIndex, "UV Index (UVI)")
-            console.log(cityUVIndex);
         });
     });
 
     function getFiveDayForecast() {
+        forecastRow.empty()
         let queryURL3 = "https://api.openweathermap.org/data/2.5/forecast?q=" + searchedCity + "&APPID=" + APIKey + "&units=metric";
         $.ajax({
             url: queryURL3,
@@ -42,12 +45,12 @@ function getWeatherData(searchedCity) {
             console.log("fiveday: ", fiveDayForecast);
             for (var i = 0; i < fiveDayForecast.list.length; i++) {
                 if (fiveDayForecast.list[i].dt_txt.indexOf("15:00:00") !== -1) {
-                    console.log([i]);
-                    let forecastCard = $("<div>", { class: "card" })
-                    let forecastDate = $("<h2>", { class: "card-body" })
-                    let forecastIcon = $("<img>", { class: "card-body" })
-                    let forecastTemp = $("<p>", { class: "card-body" })
-                    let forecastHumidity = $("<p>", { class: "card-body" })
+                    let forecastCard = $("<div>").addClass("card col-md-2");
+                    let forecastDate = $("<h2>").addClass("card-body");
+                    let forecastIcon = $("<img>").addClass("card-body");
+                    let forecastTemp = $("<p>").addClass("card-body");
+                    let forecastHumidity = $("<p>").addClass("card-body");
+
                     let forecastUNIX = fiveDayForecast.list[i].dt;
                     forecastDate.append(UNIXconverter(forecastUNIX));
                     forecastCard.append(forecastDate);
@@ -60,8 +63,8 @@ function getWeatherData(searchedCity) {
 
                     forecastHumidity.text("Humidity (RH%) " + fiveDayForecast.list[i].main.humidity);
                     forecastCard.append(forecastHumidity);
-
-                    forecastCardHTML.append(forecastCard);
+                    forecastRow.append(forecastCard);
+                    forecastCardHTML.append(forecastRow);
                 }
             };
         })
@@ -74,10 +77,19 @@ searchButton.on("click", function(event) {
     event.preventDefault();
     if (searchInput.val() === "") {
         alert("You must enter a city");
-        return;
+        return
     }
-    getWeatherData(searchInput.val());
+    const searchItem = searchInput.val();
+    getWeatherData(searchItem);
+    searchHistory.push(searchItem);
+    localStorage.setItem("search", JSON.stringify(searchHistory));
+    renderSearchHistory();
+});
 
+clearButton.on("click", function(event) {
+    event.preventDefault();
+    searchHistory = [];
+    renderSearchHistory()
 });
 
 // The timestamps provided with the fiveday forecast are UNIX timestamps - this converts them to a readable format.
@@ -90,4 +102,20 @@ function UNIXconverter(timeStamp) {
     return weekDayAndDateConverted;
 }
 
-// the next task will be to set search history into local storage.
+function renderSearchHistory() {
+    searchHistoryDiv.empty()
+    for (let i = 0; i < searchHistory.length; i++) {
+        const searchHistoryItem = $('<p>').addClass("searchHistoryItem");
+        searchHistoryItem.text(searchHistory[i]);
+        searchHistoryDiv.prepend(searchHistoryItem);
+    }
+}
+
+$(document).on("click", ".searchHistoryItem", function() {
+    let thisElement = $(this);
+    getWeatherData(thisElement.text());
+})
+
+if (searchHistory.length > 0) {
+    getWeatherData(searchHistory[searchHistory.length - 1]);
+}
