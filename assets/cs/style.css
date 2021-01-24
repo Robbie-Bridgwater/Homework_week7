@@ -2,7 +2,7 @@ header {
     -webkit-text-fill-color: white;
     -webkit-text-stroke-width: 2px;
     -webkit-text-stroke-color: black;
-    background-image: url('clouds.jpg');
+    background-image: url('../images/clouds.jpg');
     background-size: cover;
     height: 100px;
     text-align: center;
@@ -58,7 +58,18 @@ button {
     width: 100%;
 }
 
+.card:hover {
+    transition: all .2s ease-in-out;
+    transform: scale(1.1);
+}
+
 .card-body {
     font-size: 15px;
     margin: -10px;
+}
+
+.searchHistoryItem:hover {
+    cursor: pointer;
+    transition: all .2s ease-in-out;
+    transform: scale(1.1);
 }
