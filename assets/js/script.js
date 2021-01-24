@@ -18,6 +18,9 @@ if (searchHistory.length > 0) {
     getWeatherData(searchHistory[searchHistory.length - 1]);
 }
 
+// This just hides the forecast card until the getWeatherData function is called i.e. $(".fiveDayForecast").show(); on line 72. Not important, just a small aesthetic thing. (the things we do for beauty, ey?)
+$(".fiveDayForecast").hide();
+
 // <--- FUNCTIONS --->
 
 // The timestamps that come from the fiveday forecast are UNIX timestamps - this function converts them to a more ledgeable format. (like camann' I'm not a human calculator, gimme days).
@@ -66,6 +69,7 @@ function badgeComponent(cityUVIndex) {
 
 // This is the main function. It retrieves and manipulates data from the openweathermap API.
 function getWeatherData(searchedCity) {
+    $(".fiveDayForecast").show();
     let queryURL = 'https://api.openweathermap.org/data/2.5/weather?q=' + searchedCity + '&appid=' + API_KEY + "&units=metric";
     $.ajax({
             url: queryURL,
