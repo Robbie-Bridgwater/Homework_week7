@@ -1,4 +1,5 @@
 // <--- VARIABLES --->
+
 const API_KEY = '157838fc226a31fe1ea09f1f52674ede';
 const SEARCH_BUTTON = $('.searchButton');
 const CLEAR_BUTTON = $('.clearButton');
@@ -17,9 +18,6 @@ renderSearchHistory();
 if (searchHistory.length > 0) {
     getWeatherData(searchHistory[searchHistory.length - 1]);
 }
-
-// This just hides the forecast card until the getWeatherData function is called i.e. $(".fiveDayForecast").show(); on line 72. Not important, just a small aesthetic thing. (the things we do for beauty, ey?)
-$(".fiveDayForecast").hide();
 
 // <--- FUNCTIONS --->
 
@@ -69,7 +67,6 @@ function badgeComponent(cityUVIndex) {
 
 // This is the main function. It retrieves and manipulates data from the openweathermap API.
 function getWeatherData(searchedCity) {
-    $(".fiveDayForecast").show();
     let queryURL = 'https://api.openweathermap.org/data/2.5/weather?q=' + searchedCity + '&appid=' + API_KEY + "&units=metric";
     $.ajax({
             url: queryURL,
@@ -126,7 +123,7 @@ function getWeatherData(searchedCity) {
                     // This retrieves the humidity and appends it to the forecast card
                     forecastHumidity.text("Humidity (RH%) " + fiveDayForecast.list[i].main.humidity);
                     forecastCard.append(forecastHumidity);
-                    // This appends the forecast cards (which are columns using bootstrap classes as seen on line 106) to the forecast row.
+                    // This appends the forecast cards (which are columns using bootstrap classes as seen on line 108) to the forecast row.
                     FORECAST_ROW.append(forecastCard);
                     // This appends the row to the HTML div to be displayed.
                     FORECAST_CARD_HTML.append(FORECAST_ROW);
