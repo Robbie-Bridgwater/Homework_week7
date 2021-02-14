@@ -39,3 +39,6 @@ How the app should look when loaded --->
 
 ![image](assets/img/screenshot.png)
 ![image](assets/img/screenshot2.png)
+
+## Contact Information
+- Email: Robbie_Bridgwater@hotmail.co.uk
