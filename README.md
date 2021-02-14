@@ -31,10 +31,11 @@ Launch the app ---> [here](https://robbie-bridgwater.github.io/Homework_week7/)
 - HTML 
 - CSS 
 - JavaScript 
-- jQuery
+- jQuery (library)
 - Ajax
 
 ## Screenshots
 How the app should look when loaded --->
 
-![image](assets/images/screenshot.png)
+![image](assets/img/screenshot.png)
+![image](assets/img/screenshot2.png)
