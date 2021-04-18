@@ -2,7 +2,7 @@
 - A simple weather application that will return a five day forecast and current weather data for the specified city
 
 ## Link
-Launch the app ---> [here](https://robbie-bridgwater.github.io/Homework_week7/)
+Launch the app ---> [here](https://robbie-bridgwater.github.io/Weather-Dashboard/)
 
 ## User Story
 
