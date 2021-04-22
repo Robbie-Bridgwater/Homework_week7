@@ -1,38 +1,37 @@
 # Weather-Dashboard
-- A simple weather application that will return a five day forecast and current weather data for the specified city
+A simple weather application that will return a five day forecast and current weather data for the specified city
 
-## Link
-Launch the app ---> [here](https://robbie-bridgwater.github.io/Weather-Dashboard/)
+## Contents
+Section | Description
+------------ | -------------
+[Deployment](#Deployment) | Link to the Deployed Heroku Application
+[Technologies](#Technologies) | Technologies Used
+[Installation](#Installation) | Installation Information
+[Usage](#Usage) | How to use the application
+[Screenshots](#Screenshots) | Screenshots of the deployed application
+[Licence](#licence) | Licence for the source code
+[Questions](#Questions?) | Where you can reach me
 
-## User Story
+## Deployment
+OPEN WEATHER-DASHBOARD ---> [HERE](https://robbie-bridgwater.github.io/Weather-Dashboard/)
 
-- AS A traveler
-- I WANT to see the weather outlook for multiple cities
-- SO THAT I can plan a trip accordingly
+## Technologies Used
 
-
-## Acceptance Criteria
-- GIVEN a weather dashboard with form inputs
-- WHEN I search for a city
-- THEN I am presented with current and future conditions for that city and that city is added to the search history
-- WHEN I view current weather conditions for that city
-- THEN I am presented with the city name, the date, an icon representation of weather conditions, the temperature, the humidity, the wind speed, and the UV index
-- WHEN I view the UV index
-- THEN I am presented with a color that indicates whether the conditions are favorable, moderate, or severe
-- WHEN I view future weather conditions for that city
-- THEN I am presented with a 5-day forecast that displays the date, an icon representation of weather conditions, the temperature, and the humidity
-- WHEN I click on a city in the search history
-- THEN I am again presented with current and future conditions for that city
-- WHEN I open the weather dashboard
-- THEN I am presented with the last searched city forecast
+- HTML
+- CSS
+- Javascript
+- AJAX
 
 
-## Languages Used
-- HTML 
-- CSS 
-- JavaScript 
-- jQuery (library)
-- Ajax
+## Installation
+ To run this application locally you will just need to clone the repository down to your local device and open it in a browser of your choice
+
+
+## Usage
+You may do either of the following:
+* Follow the installation instructions above to run the app on your local device.
+* Use the deployed application, found at the top of this README
+
 
 ## Screenshots
 How the app should look when loaded --->
@@ -40,5 +39,19 @@ How the app should look when loaded --->
 ![image](assets/img/screenshot.png)
 ![image](assets/img/screenshot2.png)
 
-## Contact Information
-- Email: Robbie_Bridgwater@hotmail.co.uk
+
+## License
+[![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
+
+> This project was created under the standard MIT licence.
+
+> [Learn more about this licence.](https://lbesson.mit-license.org/)
+
+
+## Questions?
+
+Please contact me through my GitHub provided below if you have any questions relating to how the application works or any of my other projects
+
+My GitHub username is Robbie-Bridgwater
+
+Link to my GitHub Profile ---> https://github.com/Robbie-Bridgwater
